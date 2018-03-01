@@ -2,6 +2,7 @@
 
 from objects import game, team, player, card
 
+
 # master function to start a game of Euchre
 def run():
 	player1 = player.Player('')
@@ -13,5 +14,5 @@ def run():
 	current_game = game.Game(team1, team2)
 
 	
-
+# execute program
 run()
