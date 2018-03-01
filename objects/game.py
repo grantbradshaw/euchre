@@ -12,7 +12,8 @@ class Game:
 		self.team2 = team2
 		self.deck = self.generateDeck()
 		self.trump = ''
-		self.faceup = None
+		self.faceup = None # faceup card to help determine trump for the round
+		self.played = [] # list of cards played in a specific round
 
 	# method to initialize a deck for the game
 	def generateDeck(self):
@@ -31,9 +32,18 @@ class Game:
 		self.faceup = self.deck[20]
 
 	# method to evaluate who wins a hand
-	# expects arguments as tuples in form ('Player Instance', 'Card Instance')
-	def evaluteHand(self, card1, card2, card3, card4):
-		winning = card1
+	# method returns the card which wins
+	def evaluateHand(self):
+		winning = None
+		suitLed = None
+		for card in self.played:
+			if not winning:
+				winning = card # first card played is by default winning
+				suitLed = card.suit
+			else:
+				winning = self.evaluateCards(winning, card, suitLed)
+
+		return winning
 
 	# method to evaluate which card beats the other
 	# method returns the card which wins

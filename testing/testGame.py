@@ -227,6 +227,63 @@ class CardEval(unittest.TestCase):
 		result = self.current_game.evaluateCards(card1, card2, SPADES)
 		self.assertEqual(result, card2)
 
+class HandEval(unittest.TestCase):
+	player1 = player.Player('')
+	player2 = player.Player('')
+	player3 = player.Player('')
+	player4 = player.Player('')
+	team1 = team.Team(player1, player2)
+	team2 = team.Team(player3, player4)
+	current_game = game.Game(team1, team2)
+
+	def test_evaluate_hand(self):
+		''' Trump Hearts, 9 of Hearts beats A of Spades, A of Clubs, A of Diamonds'''
+
+		card1 = card.Card(HEARTS, NINE)
+		card2 = card.Card(SPADES, A)
+		card3 = card.Card(CLUBS, A)
+		card4 = card.Card(DIAMONDS, A)
+		self.current_game.trump = HEARTS
+		self.current_game.played = [card1, card2, card3, card4]
+		result = self.current_game.evaluateHand()
+		self.assertEqual(result, card1)
+
+	def test_evaluate_hand_2(self):
+		''' Trump Hearts, 9 of Hearts beats A of Spades, A of Clubs, A of Diamonds'''
+
+		card1 = card.Card(SPADES, A)
+		card2 = card.Card(HEARTS, NINE)
+		card3 = card.Card(CLUBS, A)
+		card4 = card.Card(DIAMONDS, A)
+		self.current_game.trump = HEARTS
+		self.current_game.played = [card1, card2, card3, card4]
+		result = self.current_game.evaluateHand()
+		self.assertEqual(result, card2)
+
+	def test_evaluate_hand_3(self):
+		''' Trump Clubs, 9 of Hearts beats A of Spades, K of Spades, A of Diamonds, when 9 played first'''
+
+		card1 = card.Card(HEARTS, NINE)
+		card2 = card.Card(SPADES, A)
+		card3 = card.Card(SPADES, K)
+		card4 = card.Card(DIAMONDS, A)
+		self.current_game.trump = CLUBS
+		self.current_game.played = [card1, card2, card3, card4]
+		result = self.current_game.evaluateHand()
+		self.assertEqual(result, card1)
+
+	def test_evaluate_hand_4(self):
+		''' Trump Clubs, J of Spades beats A of Diamonds, K of Hearts, A of Clubs, when A of Diamonds played first'''
+
+		card1 = card.Card(DIAMONDS, A)
+		card2 = card.Card(CLUBS, A)
+		card3 = card.Card(HEARTS, K)
+		card4 = card.Card(SPADES, J)
+		self.current_game.trump = CLUBS
+		self.current_game.played = [card1, card2, card3, card4]
+		result = self.current_game.evaluateHand()
+		self.assertEqual(result, card4)
+
 
 if __name__ == '__main__':
 	unittest.main()
