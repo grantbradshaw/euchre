@@ -1,0 +1,12 @@
+HEARTS = 'Hearts'
+DIAMONDS = 'Diamonds'
+SPADES = 'Spades'
+CLUBS = 'Clubs'
+A = 'Ace'
+K = 'King'
+Q = 'Queen'
+J = 'Jack'
+TEN = '10'
+NINE = '9'
+SUITS = [HEARTS, DIAMONDS, SPADES, CLUBS]
+SYMBOLS = [NINE, TEN, J, Q, K, A]

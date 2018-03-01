@@ -1,11 +1,11 @@
-from . import card, team, player
+import os, sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 from random import shuffle
+from . import card, team, player
+from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE, SUITS, SYMBOLS
 
 class Game:
 	'Base class for a game'
-
-	suits = ['Clubs', 'Hearts', 'Diamonds', 'Spades']
-	symbols = ['9', '10', 'J', 'Q', 'K', 'A']
 
 	def __init__(self, team1, team2):
 		self.team1 = team1
@@ -19,8 +19,8 @@ class Game:
 		
 		deck = []
 
-		for suit in self.suits:
-			for symbol in self.symbols:
+		for suit in SUITS:
+			for symbol in SYMBOLS:
 				deck.append(card.Card(suit, symbol))
 
 		return deck
@@ -39,7 +39,7 @@ class Game:
 	# method returns the card which wins
 	# expects arguments in the following form,
 	#    card1, card2 as instances of Card
-	#    suitLed as one of ['Clubs', 'Hearts', 'Diamonds', 'Spades']
+	#    suitLed as one of [CLUBS, HEARTS, DIAMONDS, SPADES]
 	def evaluateCards(self, card1, card2, suitLed):
 		if self.isTrump(card1):
 			if self.isTrump(card2):
@@ -67,8 +67,8 @@ class Game:
 	# method returns the card which wins
 	# expects arguments (card1, card2)
 	def evaluateNotTrump(self, card1, card2):
-		card1Position = self.symbols.index(card1.symbol)
-		card2Position = self.symbols.index(card2.symbol)
+		card1Position = SYMBOLS.index(card1.symbol)
+		card2Position = SYMBOLS.index(card2.symbol)
 		if card1Position > card2Position:
 			return card1
 		elif card1Position < card2Position:
@@ -85,13 +85,13 @@ class Game:
 			if self.isLeftBower(card2):
 				raise ValueError('Cannot compare same card')
 			else:
-				if card2.symbol == 'J':
+				if card2.symbol == J:
 					return card2
 				else:
 					return card1
 		else:
 			if self.isLeftBower(card2):
-				if card1.symbol == 'J':
+				if card1.symbol == J:
 					return card1
 				else:
 					return card2
@@ -115,11 +115,11 @@ class Game:
 	# expects arguments
 	# 	card as an instance of Card
 	def isLeftBower(self, card):
-		if card.symbol == 'J':
-			if ((card.suit == 'Spades' and self.trump == 'Clubs') or
-					(card.suit == 'Clubs' and self.trump == 'Spades') or
-					(card.suit == 'Diamonds' and self.trump == 'Hearts') or
-					(card.suit == 'Hearts' and self.trump == 'Diamonds')):
+		if card.symbol == J:
+			if ((card.suit == SPADES and self.trump == CLUBS) or
+					(card.suit == CLUBS and self.trump == SPADES) or
+					(card.suit == DIAMONDS and self.trump == HEARTS) or
+					(card.suit == HEARTS and self.trump == DIAMONDS)):
 				return True
 			else:
 				return False

@@ -1,3 +1,7 @@
+import os, sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE, SUITS, SYMBOLS
+
 class Card:
 	'Base class for a card'
 

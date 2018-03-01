@@ -1,7 +1,8 @@
 # master filing for launching application
 
 from objects import game, team, player, card
-
+from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE, 
+						SUITS, SYMBOLS
 
 # master function to start a game of Euchre
 def run():
