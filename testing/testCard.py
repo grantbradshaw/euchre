@@ -34,6 +34,38 @@ class CardInit(unittest.TestCase):
 		'''New card without a holder should set holder to "Not Held"'''
 		self.assertEqual(self.card3.holder, NOT_HELD)
 
+class CardType(unittest.TestCase):
+
+	def test_is_left_bower(self):
+		'''J of Spades is a left bower when trump is Clubs'''
+		result = card.Card(SPADES, J).isLeftBower(CLUBS)
+		self.assertEqual(result, True)
+
+	def test_is_left_bower_2(self):
+		'''J of Clubs is a left bower when trump is Spades'''
+		result = card.Card(CLUBS, J).isLeftBower(SPADES)
+		self.assertEqual(result, True)
+
+	def test_is_left_bower_3(self):
+		'''J of Diamonds is a left bower when trump is Hearts'''
+		result = card.Card(DIAMONDS, J).isLeftBower(HEARTS)
+		self.assertEqual(result, True)
+
+	def test_is_left_bower_4(self):
+		'''J of Hearts is a left bower when trump is Diamonds'''
+		result = card.Card(HEARTS, J).isLeftBower(DIAMONDS)
+		self.assertEqual(result, True)
+
+	def test_is_left_bower_5(self):
+		'''J of Hearts is not a left bower when trump is Hearts'''
+		result = card.Card(HEARTS, J).isLeftBower(HEARTS)
+		self.assertEqual(result, False)
+
+	def test_is_left_bower_6(self):
+		'''Q cannot be a left bower'''
+		result = card.Card(HEARTS, Q).isLeftBower(HEARTS)
+		self.assertEqual(result, False)
+
 
 if __name__ == '__main__':
 	unittest.main()

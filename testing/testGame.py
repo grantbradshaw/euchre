@@ -14,48 +14,6 @@ class CardEval(unittest.TestCase):
 	team2 = team.Team(player3, player4)
 	current_game = game.Game(team1, team2)
 
-	def test_is_left_bower(self):
-		'''J of Spades is a left bower when trump is Clubs'''
-		card1 = card.Card(SPADES, J)
-		self.current_game.trump =  CLUBS
-		result = self.current_game.isLeftBower(card1)
-		self.assertEqual(result, True)
-
-	def test_is_left_bower_2(self):
-		'''J of Clubs is a left bower when trump is Spades'''
-		card1 = card.Card(CLUBS, J)
-		self.current_game.trump =  SPADES
-		result = self.current_game.isLeftBower(card1)
-		self.assertEqual(result, True)
-
-	def test_is_left_bower_3(self):
-		'''J of Diamonds is a left bower when trump is Hearts'''
-		card1 = card.Card(DIAMONDS, J)
-		self.current_game.trump =  HEARTS
-		result = self.current_game.isLeftBower(card1)
-		self.assertEqual(result, True)
-
-	def test_is_left_bower_4(self):
-		'''J of Hearts is a left bower when trump is Diamonds'''
-		card1 = card.Card(HEARTS, J)
-		self.current_game.trump =  DIAMONDS
-		result = self.current_game.isLeftBower(card1)
-		self.assertEqual(result, True)
-
-	def test_is_left_bower_5(self):
-		'''J of Hearts is not a left bower when trump is Hearts'''
-		card1 = card.Card(HEARTS, J)
-		self.current_game.trump =  HEARTS
-		result = self.current_game.isLeftBower(card1)
-		self.assertEqual(result, False)
-
-	def test_is_left_bower_6(self):
-		'''Q cannot be a left bower'''
-		card1 = card.Card(HEARTS, Q)
-		self.current_game.trump =  HEARTS
-		result = self.current_game.isLeftBower(card1)
-		self.assertEqual(result, False)
-
 	def test_is_trump(self):
 		'''K of Clubs is trump when trump is Clubs'''
 		card1 = card.Card(CLUBS, K)

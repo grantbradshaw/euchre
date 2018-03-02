@@ -11,6 +11,22 @@ class Card:
 		if holder == NOT_HELD:
 			raise ValueError('Reserved namespace')
 		elif holder:
-			self.holder = holder
+			self.holder = holder # should be an instance of player
 		else:
 			self.holder = NOT_HELD
+
+	# method to determine if a card is a 'left bower' (counts as a trump card)
+	# method returns True if left bower, False if not
+	# expects arguments
+	# 	card as an instance of Card
+	def isLeftBower(self, trump):
+		if self.symbol == J:
+			if ((self.suit == SPADES and trump == CLUBS) or
+					(self.suit == CLUBS and trump == SPADES) or
+					(self.suit == DIAMONDS and trump == HEARTS) or
+					(self.suit == HEARTS and trump == DIAMONDS)):
+				return True
+			else:
+				return False
+		else:
+			return False

@@ -91,8 +91,8 @@ class Game:
 	# expects arguments 
 	# 	card1, card2 as instances of Card
 	def evaluateTrump(self, card1, card2):
-		if self.isLeftBower(card1):
-			if self.isLeftBower(card2):
+		if card1.isLeftBower(self.trump):
+			if card2.isLeftBower(self.trump):
 				raise ValueError('Cannot compare same card')
 			else:
 				if card2.symbol == J:
@@ -100,7 +100,7 @@ class Game:
 				else:
 					return card1
 		else:
-			if self.isLeftBower(card2):
+			if card2.isLeftBower(self.trump):
 				if card1.symbol == J:
 					return card1
 				else:
@@ -115,24 +115,8 @@ class Game:
 	def isTrump(self, card):
 		if card.suit == self.trump:
 			return True
-		elif self.isLeftBower(card):
+		elif card.isLeftBower(self.trump):
 			return True
-		else:
-			return False
-
-	# method to determine if a card is a 'left bower' (counts as a trump card)
-	# method returns True if left bower, False if not
-	# expects arguments
-	# 	card as an instance of Card
-	def isLeftBower(self, card):
-		if card.symbol == J:
-			if ((card.suit == SPADES and self.trump == CLUBS) or
-					(card.suit == CLUBS and self.trump == SPADES) or
-					(card.suit == DIAMONDS and self.trump == HEARTS) or
-					(card.suit == HEARTS and self.trump == DIAMONDS)):
-				return True
-			else:
-				return False
 		else:
 			return False
 
