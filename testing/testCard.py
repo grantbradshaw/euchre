@@ -36,6 +36,36 @@ class CardInit(unittest.TestCase):
 
 class CardType(unittest.TestCase):
 
+	def test_is_trump(self):
+		'''K of Clubs is trump when trump is Clubs'''
+		card1 = card.Card(CLUBS, K)
+		result = card1.isTrump(CLUBS)
+		self.assertEqual(result, True)
+
+	def test_is_trump_2(self):
+		'''K of Clubs is not trump when trump is Spades'''
+		card1 = card.Card(CLUBS, K)
+		result = card1.isTrump(SPADES)
+		self.assertEqual(result, False)
+
+	def test_is_trump_3(self):
+		'''J of Clubs is trump when trump is Spades'''
+		card1 = card.Card(CLUBS, J)
+		result = card1.isTrump(SPADES)
+		self.assertEqual(result, True)
+
+	def test_is_trump_4(self):
+		'''J of Clubs is trump when trump is Clubs'''
+		card1 = card.Card(CLUBS, J)
+		result = card1.isTrump(CLUBS)
+		self.assertEqual(result, True)
+
+	def test_is_trump_5(self):
+		'''K of Clubs is not trump when trump is Hearts'''
+		card1 = card.Card(CLUBS, J)
+		result = card1.isTrump(HEARTS)
+		self.assertEqual(result, False)
+
 	def test_is_left_bower(self):
 		'''J of Spades is a left bower when trump is Clubs'''
 		result = card.Card(SPADES, J).isLeftBower(CLUBS)

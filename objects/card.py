@@ -30,3 +30,15 @@ class Card:
 				return False
 		else:
 			return False
+
+	# method to determine if a card is trump
+	# method returns True if trump, False if not trump
+	# expects arguments
+	# 	card as an instance of Card
+	def isTrump(self, trump):
+		if self.suit == trump:
+			return True
+		elif self.isLeftBower(trump):
+			return True
+		else:
+			return False

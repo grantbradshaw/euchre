@@ -14,42 +14,6 @@ class CardEval(unittest.TestCase):
 	team2 = team.Team(player3, player4)
 	current_game = game.Game(team1, team2)
 
-	def test_is_trump(self):
-		'''K of Clubs is trump when trump is Clubs'''
-		card1 = card.Card(CLUBS, K)
-		self.current_game.trump = CLUBS
-		result = self.current_game.isTrump(card1)
-		self.assertEqual(result, True)
-
-	def test_is_trump_2(self):
-		'''K of Clubs is not trump when trump is Spades'''
-		card1 = card.Card(CLUBS, K)
-		self.current_game.trump = SPADES
-		result = self.current_game.isTrump(card1)
-		self.assertEqual(result, False)
-
-	def test_is_trump_3(self):
-		'''J of Clubs is trump when trump is Spades'''
-		card1 = card.Card(CLUBS, J)
-		self.current_game.trump = SPADES
-		result = self.current_game.isTrump(card1)
-		self.assertEqual(result, True)
-
-	def test_is_trump_4(self):
-		'''J of Clubs is trump when trump is Clubs'''
-		card1 = card.Card(CLUBS, J)
-		self.current_game.trump = CLUBS
-		result = self.current_game.isTrump(card1)
-		self.assertEqual(result, True)
-
-	def test_is_trump_5(self):
-		'''K of Clubs is not trump when trump is Hearts'''
-		card1 = card.Card(CLUBS, J)
-		self.current_game.trump = HEARTS
-		result = self.current_game.isTrump(card1)
-		self.assertEqual(result, False)
-
-
 	def test_evaluate_cards(self):
 		'''10 beats 9, same suit as led, neither trump'''
 
@@ -58,7 +22,7 @@ class CardEval(unittest.TestCase):
 		self.current_game.trump = HEARTS
 		result = self.current_game.evaluateCards(card1, card2, SPADES)
 		self.assertEqual(result, card2)
-	
+
 	def test_evaluate_cards_2(self):
 		'''J beats 10, same suit as led, neither trump'''
 

@@ -17,7 +17,7 @@ class Game:
 
 	# method to initialize a deck for the game
 	def generateDeck(self):
-		
+
 		deck = []
 
 		for suit in SUITS:
@@ -51,13 +51,13 @@ class Game:
 	#    card1, card2 as instances of Card
 	#    suitLed as one of [CLUBS, HEARTS, DIAMONDS, SPADES]
 	def evaluateCards(self, card1, card2, suitLed):
-		if self.isTrump(card1):
-			if self.isTrump(card2):
+		if card1.isTrump(self.trump):
+			if card2.isTrump(self.trump):
 				return self.evaluateTrump(card1, card2)
 			else:
 				return card1
 		else:
-			if self.isTrump(card2):
+			if card2.isTrump(self.trump):
 				return card2
 			else:
 				if card1.suit == suitLed:
@@ -88,7 +88,7 @@ class Game:
 
 	# method to evaluate which of two same suit, trump cards wins
 	# method returns the card which wins
-	# expects arguments 
+	# expects arguments
 	# 	card1, card2 as instances of Card
 	def evaluateTrump(self, card1, card2):
 		if card1.isLeftBower(self.trump):
@@ -108,20 +108,8 @@ class Game:
 			else:
 				return self.evaluateNotTrump(card1, card2) # no special Jack rules apply
 
-	# method to determine if a card is trump
-	# method returns True if trump, False if not trump
-	# expects arguments
-	# 	card as an instance of Card
-	def isTrump(self, card):
-		if card.suit == self.trump:
-			return True
-		elif card.isLeftBower(self.trump):
-			return True
-		else:
-			return False
 
-
-	# method to deal a hand for a round	
+	# method to deal a hand for a round
 	def deal(self):
 		shuffle(self.deck)
 		self.team1.player1.hand = self.deck[0:5]
