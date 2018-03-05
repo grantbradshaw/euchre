@@ -1,7 +1,7 @@
 import os, sys
 import random
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
-from environment import HEARTS, DIAMONDS, SPADES, CLUBS, NOT_HELD
+from environment import HEARTS, DIAMONDS, SPADES, CLUBS, NOT_HELD, SUITS
 
 class Player:
 	'Base class for player'
@@ -16,10 +16,14 @@ class Player:
 	# method to select a card to play
 	# method returns a valid card to play
 	# expects arguments
-	# 	suitLed should be one of SPADES, HEARTS, DIAMONDS, CLUBS or None if first card played	
-	def play(self, suitLed):
+	# 	suitLed should be one of SPADES, HEARTS, DIAMONDS, CLUBS or None if first card played
+	def play(self, trump, suitLed):
 		if suitLed:
-			pass
+			playable = list(filter(lambda x: self.canPlay(x, trump, suitLed), self.hand))
+			if playable:
+				return self.selectCard(playable)
+			else:
+				return self.selectCard(self.hand)
 		else:
 			return self.selectCard(self.hand)
 
@@ -42,6 +46,38 @@ class Player:
 	# 	trump as one of SPADES, HEARTS, DIAMONDS, CLUBS
 	# 	suitLed as one of SPADES, HEARTS, DIAMONDS, CLUBS
 	def canPlay(self, card, trump, suitLed):
-		pass
+		if card.isLeftBower(trump):
+			if suitLed == trump:
+				return True
+			else:
+				return False
+		elif card.suit == suitLed:
+			return True
+		else:
+			return False
+
+	# method which returns a player's response for trump when card face up
+	# method returns a Boolean
+	# expects arguments
+	# 	card is the card which is face up
+	# 	table is a list of players in the order they play and can decide trump, dealer last
+	def decideTrumpFaceUp(self, card, table):
+		if list(filter(lambda x: x.suit == card.suit, self.hand)):
+			return True
+		else:
+			return False
+
+	# method which returns a player's response for trump when card face down
+	# method returns a Boolean
+	# expects arguments
+	# 	card is the card which was face up
+	# 	table is a list of players in the order they play and can decide trump, dealer last
+	def decideTrumpFaceDown(self, card, table):
+		return random.choice(list(filter(lambda x: x != card.suit, SUITS)))
+
+
+
+
+
 
 
