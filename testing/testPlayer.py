@@ -1,7 +1,8 @@
 import os, sys
 import unittest
+import copy
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
-from objects import player
+from objects import player, card, team, game
 from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE, NOT_HELD
 
 class PlayerInit(unittest.TestCase):
@@ -20,6 +21,86 @@ class PlayerInit(unittest.TestCase):
 		'''New player have error raised if they use reserved namespace'''
 		with self.assertRaises(ValueError):
 			player.Player(NOT_HELD)
+
+class PlayCard(unittest.TestCase):
+	player1 = player.Player('')
+	player2 = player.Player('')
+	player3 = player.Player('')
+	player4 = player.Player('')
+	team1 = team.Team(player1, player2)
+	team2 = team.Team(player3, player4)
+	current_game = game.Game(team1, team2)
+
+	card1 = card.Card(CLUBS, NINE, player1)
+	card2 = card.Card(CLUBS, A, player1)
+	card3 = card.Card(SPADES, Q, player1)
+	card4 = card.Card(DIAMONDS, TEN, player1)
+	card5 = card.Card(HEARTS, K, player1)
+	card6 = card.Card(DIAMONDS, J)
+	card7 = card.Card(CLUBS, Q, player2)
+	card8 = card.Card(HEARTS, NINE, player2)
+
+	def test_play_card_1(self):
+		'''Any card in hand should be valid if first to play, function should return any card from hand'''
+
+		self.current_game.trump = SPADES
+		# self.current_game.played = [] -> for reference, not required for function invocation
+		available_cards = [self.card1, self.card2, self.card3, self.card4, self.card5]
+		self.player1.hand = copy.copy(available_cards)
+		result = self.player1.play(None)
+		self.assertIn(result, available_cards) # as card is removed from hand, need to use copy of hand
+
+	def test_play_card_2(self):
+		'''Card which is played should be appropriately removed from the hand'''
+
+		self.current_game.trump = SPADES
+		# self.current_game.played = [] -> for reference, not required for function invocation
+		available_cards = [self.card1, self.card2, self.card3, self.card4, self.card5]
+		self.player1.hand = copy.copy([self.card1, self.card2, self.card3, self.card4, self.card5])
+		result = self.player1.play(None)
+		self.assertNotIn(result, self.player1.hand) # as card is removed from hand, test properly removed
+
+	def test_play_card_3(self):
+		'''Should only play one of the clubs cards when clubs are led'''
+
+		self.current_game.trump = SPADES
+		# self.current_game.played = [card7] -> for reference, not required for function invocation
+		self.player1.hand = [self.card1, self.card2, self.card3, self.card4, self.card5]
+		result = self.player1.play(CLUBS)
+		self.assertIn(result, [self.card1, self.card2])
+
+	def test_play_card_4(self):
+		'''Should only play a heart or the Jack of diamonds when hearts are led and trump'''
+
+		self.current_game.trump = HEARTS
+		# self.current_game.played = [card8] -> for reference, not required for function invocation
+		self.player1.hand = [self.card2, self.card3, self.card4, self.card5, self.card6]
+		result = self.player1.play(HEARTS)
+		self.assertIn(result, [self.card5, self.card6])
+
+	def test_play_card_5(self):
+		'''Should play any card when cannot follow suit'''
+
+		self.current_game.trump = HEARTS
+		# self.current_game.played = [card8] -> for reference, not required for function invocation
+		available_cards = [self.card1, self.card2, self.card4, self.card5, self.card6]
+		self.player1.hand = copy.copy(available_cards)
+		result = self.player1.play(SPADES)
+		self.assertIn(result, available_cards)
+
+	def test_select_card_1(self):
+		'''selectCard method should raise exception if list of cards empty'''
+
+		with self.assertRaises(ValueError):
+			self.player1.selectCard([])
+
+	def test_can_play_1(self):
+		'''canPlay method should return True for J of Diamonds, trump clubs, suitLed Diamonds'''
+		result = self.player1.canPlay(card6, CLUBS, DIAMONDS)
+		self.assertEqual(result, True)
+
+
+
 
 if __name__ == '__main__':
 	unittest.main()
