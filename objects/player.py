@@ -83,7 +83,9 @@ class Player:
 	# 	trump as one of SPADES, HEARTS, DIAMONDS, CLUBS (not required now, but for future logic)
 	# 	selector as an index indicating where in table trump was selected (not required now, but for future logic)
 	def addCardToHand(self, card, trump, selector):
-		pass
+		self.hand.append(card)
+		random.shuffle(self.hand)
+		self.hand.pop()
 
 
 
