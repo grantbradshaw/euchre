@@ -275,5 +275,12 @@ class RuleEval(unittest.TestCase):
 				self.assertNotEqual(self.team1.onTeam(player), self.team1.onTeam(lastPlayer))
 				lastPlayer = player
 
+	def test_start_round_6(self):
+		'''A second round should have a different dealer'''
+		self.current_game.startRound()
+		dealer1 = self.current_game.dealer
+		self.current_game.startRound()
+		self.assertNotEqual(dealer1, self.current_game.dealer)
+
 if __name__ == '__main__':
 	unittest.main()
