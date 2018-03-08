@@ -11,11 +11,13 @@ class Game:
 		self.team1 = team1
 		self.team2 = team2
 		self.deck = self.generateDeck()
-		self.trump = ''
+		self.trump = None
 		self.faceup = None # faceup card to help determine trump for the round
 		self.played = [] # list of cards played in a specific round
+		self.table = [team1.player1, team2.player1, team1.player2, team2.player2]
 
 	# method to initialize a deck for the game
+	# method returns a length 24 list of the cards typically used in 4 person, 5 card hand euchre
 	def generateDeck(self):
 
 		deck = []
@@ -27,6 +29,7 @@ class Game:
 		return deck
 
 	# method to start a round of Euchre
+	# method returns nothing, but has the side effect of setting the faceup card
 	def startRound(self):
 		self.deal()
 		self.faceup = self.deck[20]

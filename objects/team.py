@@ -9,6 +9,8 @@ class Team:
 		self.player1 = player1
 		self.player2 = player2
 
+	# method to determine how many points a team receives from a round and add it to the teams score
+	# method returns nothing, has side effect of incrementing gameScore
 	def scoreHand(self):
 		if self.tricks < 3:
 			pass
@@ -24,10 +26,9 @@ class Team:
 				self.gameScore += 2
 		else:
 			raise ValueError('Cannot have more than 5 tricks.')
-		
 
 
 
 
 
-	
+
