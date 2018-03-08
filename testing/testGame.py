@@ -2,7 +2,7 @@ import os, sys
 import unittest
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 from objects import game, team, player, card
-from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE
+from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE, SUITS, SYMBOLS
 
 
 class CardEval(unittest.TestCase):
@@ -214,6 +214,47 @@ class RuleEval(unittest.TestCase):
 	team1 = team.Team(player1, player2)
 	team2 = team.Team(player3, player4)
 	current_game = game.Game(team1, team2)
+
+	# method to compare if two instances of cards have same suit and symbol
+	# returns a Boolean
+	# expects arguments
+	# 	card1, card2 as instances of card
+	def cardsEqual(self, card1, card2):
+		return ((card1.suit == card2.suit) and (card1.symbol == card2.symbol))
+
+	# method should return if a card is valid
+	# returns a Boolean
+	# expects arguments
+	# 	card as instance of card
+	def cardValid(self, card):
+		return ((card.suit in SUITS) and (card.symbol in SYMBOLS))
+
+	def test_generate_deck(self):
+		'''Deck should contain 24 unique, valid cards'''
+		self.current_game.generateDeck()
+		result = []
+		for card in self.current_game.deck:
+			if self.cardValid(card) and (len(list(filter(lambda x: self.cardsEqual(x, card), result)))) == 0:
+				result.append(card)
+
+		self.assertEqual(24, len(result))
+
+	def test_start_round_1(self):
+		'''Each player should have 5 cards in hand'''
+		self.current_game.startRound()
+		for player in [self.player1, self.player2, self.player3, self.player4]:
+			with self.subTest(player=player):
+				self.assertEqual(len(player.hand), 5)
+
+	def test_start_round_2(self):
+		'''Faceup card should be different from any card in players hands'''
+		self.current_game.startRound()
+		result = False # result indicates whether card has appeared in a hand
+		for player in [self.player1, self.player2, self.player3, self.player4]:
+			for card in player.hand:
+				if self.cardsEqual(card, self.current_game.faceup):
+					result = True
+		self.assertEqual(result, False)
 
 
 
