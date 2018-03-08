@@ -149,6 +149,11 @@ class DecideTrump(unittest.TestCase):
 		result = self.player1.decideTrumpFaceDown(self.card1, [self.player1, self.player2, self.player3, self.player4])
 		self.assertIn(result, [SPADES, DIAMONDS, HEARTS])
 
+	def add_card_to_hand(self):
+		'''Player should have 5 cards in hand after being able to add card to hand'''
+		self.player1.addCardToHand(card1, CLUBS, 0)
+		selt.assertEqual(len(self.player1.hand), 5)
+
 
 if __name__ == '__main__':
 	unittest.main()

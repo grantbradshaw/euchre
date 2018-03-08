@@ -60,8 +60,8 @@ class Player:
 	# method returns a Boolean
 	# expects arguments
 	# 	card is the card which is face up
-	# 	table is a list of players in the order they play and can decide trump, dealer last
-	def decideTrumpFaceUp(self, card, table):
+	# 	dealerIsPartner is Boolean indicating whether the dealer is the player's partner (not required now, but for future logic)
+	def decideTrumpFaceUp(self, card, dealerIsPartner):
 		if list(filter(lambda x: x.suit == card.suit, self.hand)):
 			return True
 		else:
@@ -74,6 +74,17 @@ class Player:
 	# 	table is a list of players in the order they play and can decide trump, dealer last
 	def decideTrumpFaceDown(self, card, table):
 		return random.choice(list(filter(lambda x: x != card.suit, SUITS)))
+
+	# method where the dealer can add the faceup card to their hand
+	# method returns nothing, but 
+	# 	has the side effect of (potentially) altering the player's hand
+	# method expects the arguments
+	# 	card as an instance of card
+	# 	trump as one of SPADES, HEARTS, DIAMONDS, CLUBS (not required now, but for future logic)
+	# 	selector as an index indicating where in table trump was selected (not required now, but for future logic)
+	def addCardToHand(self, card, trump, selector):
+		pass
+
 
 
 
