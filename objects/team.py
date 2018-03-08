@@ -34,6 +34,13 @@ class Team:
 	def onTeam(self, player):
 		return ((player == self.player1) or (player == self.player2))
 
+	# method to determine if two players are on the same team, and not the same player
+	# method retuns Boolean
+	# expects arguments
+	# 	player1, player2 as instances of Player
+	def sameTeam(self, player1, player2):
+		return self.onTeam(player1) and self.onTeam(player2) and player1 != player2
+
 
 
 

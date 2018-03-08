@@ -91,6 +91,21 @@ class OnTeam(unittest.TestCase):
 		result = self.team1.onTeam(self.player3)
 		self.assertEqual(result, False)
 
+	def test_same_team_1(self):
+		'''Should return True for 2 different players on same team.'''
+		result = self.team1.sameTeam(self.player1, self.player2)
+		self.assertEqual(result, True)
+
+	def test_same_team_2(self):
+		'''Should return False for 2 different players on different teams'''
+		result = self.team1.sameTeam(self.player1, self.player3)
+		self.assertEqual(result, False)
+
+	def test_same_team_3(self):
+		'''Should return False when testing same player on team'''
+		result = self.team1.sameTeam(self.player1, self.player1)
+		self.assertEqual(result, False)
+
 
 if __name__ == '__main__':
 	unittest.main()
