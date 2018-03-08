@@ -27,6 +27,13 @@ class Team:
 		else:
 			raise ValueError('Cannot have more than 5 tricks.')
 
+	# method to determine if a player is on the team
+	# method returns Boolean
+	# expects arguments
+	# 	player as an instance of Player
+	def onTeam(self, player):
+		return ((player == self.player1) or (player == self.player2))
+
 
 
 

@@ -73,5 +73,24 @@ class ScoreTeam(unittest.TestCase):
 		with self.assertRaises(ValueError):
 			team1.scoreHand()
 
+class OnTeam(unittest.TestCase):
+	player1 = player.Player('')
+	player2 = player.Player('')
+	player3 = player.Player('')
+	player4 = player.Player('')
+	team1 = team.Team(player1, player2)
+	team2 = team.Team(player3, player4)
+
+	def test_on_team_1(self):
+		'''Should return True for player on team'''
+		result = self.team1.onTeam(self.player1)
+		self.assertEqual(result, True)
+
+	def test_on_team_2(self):
+		'''Should return False for player on team'''
+		result = self.team1.onTeam(self.player3)
+		self.assertEqual(result, False)
+
+
 if __name__ == '__main__':
 	unittest.main()
