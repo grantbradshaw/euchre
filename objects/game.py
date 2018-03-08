@@ -119,8 +119,3 @@ class Game:
 		self.team1.player2.hand = self.deck[5:10]
 		self.team2.player1.hand = self.deck[10:15]
 		self.team2.player2.hand = self.deck[15:20]
-
-
-	# method to display scores of teams
-	def displayScores(self):
-		return "Team 1: ", self.team1.gameScore, ", Team 2: ", self.team2.gameScore
