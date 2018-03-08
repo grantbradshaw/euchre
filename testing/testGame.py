@@ -256,8 +256,24 @@ class RuleEval(unittest.TestCase):
 					result = True
 		self.assertEqual(result, False)
 
+	def test_start_round_3(self):
+		'''There should be 4 players at the table'''
+		self.current_game.startRound()
+		self.assertEqual(4, len(self.current_game.table))
 
+	def test_start_round_4(self):
+		'''The last player at the table should be the dealer'''
+		self.current_game.startRound()
+		self.assertEqual(self.current_game.table[-1], self.current_game.dealer)
 
+	def test_start_round_5(self):
+		'''Players following each other in the table should not be on the same team'''
+		self.current_game.startRound()
+		lastPlayer = self.current_game.table[-1] # should test dealer
+		for player in self.current_game.table:
+			with self.subTest(player=player):
+				self.assertNotEqual(self.team1.onTeam(player), self.team1.onTeam(lastPlayer))
+				lastPlayer = player
 
 if __name__ == '__main__':
 	unittest.main()

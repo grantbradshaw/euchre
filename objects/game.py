@@ -14,7 +14,8 @@ class Game:
 		self.trump = None
 		self.faceup = None # faceup card to help determine trump for the round
 		self.played = [] # list of cards played in a specific round
-		self.table = [team1.player1, team2.player1, team1.player2, team2.player2]
+		self.table = [team2.player2, team1.player1, team2.player1, team1.player2]
+		self.dealer = None
 
 	# method to initialize a deck for the game
 	# method returns a length 24 list of the cards typically used in 4 person, 5 card hand euchre
@@ -33,6 +34,8 @@ class Game:
 	def startRound(self):
 		self.deal()
 		self.faceup = self.deck[20]
+		self.dealer = self.table.pop(0)
+		self.table.append(self.dealer)
 
 	# method to evaluate who wins a hand
 	# method returns the card which wins
