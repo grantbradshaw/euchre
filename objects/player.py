@@ -68,6 +68,7 @@ class Player:
 			return False
 
 	# method which returns a player's response for trump when card face down
+	# 	must return a choice if dealer - to be built
 	# method returns a Boolean
 	# expects arguments
 	# 	card is the card which was face up
@@ -86,6 +87,14 @@ class Player:
 		self.hand.append(card)
 		random.shuffle(self.hand)
 		self.hand.pop()
+
+	# method where the player decides if they want to 'go alone'
+	# method returns a Boolean indicating their choice
+	# method expects the arguments
+	# 	card as an instance of card representing the faceup card (not required now, but for future logic)
+	# 	table is a list of players in the order they play and can decide trump, dealer last (not required now, but for future logic)
+	def decideGoingAlone(self, card, table):
+		return False
 
 
 

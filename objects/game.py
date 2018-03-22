@@ -46,6 +46,12 @@ class Game:
 		if not self.trump: # if no trump was set when card was face up
 			self.setTrumpFaceDown()
 
+
+	# method to end a round of Euchre
+	# method returns nothing, but has side effect of resetting round specific variables
+	def endRound(self):
+		pass
+
 	# method to decide trump when card is faceup
 	# method returns nothing, but either 
 	# 	sets trump as a suit, allows dealer to add faceup card to hand, and sets calledTrump attribute on player's team to True
@@ -58,10 +64,13 @@ class Game:
 			if decision:
 				self.dealer.addCardToHand(self.faceup, self.trump, self.table.index(player))
 				self.trump = self.faceup.suit
+				alone = player.decideGoingAlone(self.faceup, self.table)
 				if self.team1.onTeam(player):
 					self.team1.calledTrump = True
+					self.team1.alone = alone
 				else:
 					self.team2.calledTrump = True
+					self.team2.alone = alone
 				break
 			else:
 				continue
@@ -70,8 +79,35 @@ class Game:
 	# method returns nothing, but either
 	# 	sets trump as a suit
 	# 	does nothing
-	def setTrumpFaceDown(self):
-		pass
+	# expects arguments,
+	# 	mean indicates whether the dealer is forced to call Trump
+	#		if True, dealer is forced to select a suit for Trump
+	#		if False, round ends if dealer does not select a suit for Trump
+	def setTrumpFaceDown(self, mean=False):
+		for player in self.table:
+			decision = player.decideTrumpFaceDown(self.faceup, self.table)
+
+			if decision:
+				self.trump = self.faceup.suit
+				alone = player.decideGoingAlone(self.faceup, self.table)
+				if self.team1.onTeam(player):
+					self.team1.calledTrump = True
+					self.team1.alone = alone
+				else:
+					self.team2.calledTrump = True
+					self.team2.alone = alone
+				break
+			else:
+				continue
+
+		if self.trump:
+			pass
+		else:
+			if mean:
+				raise ValueError('Dealer must have called trump')
+			else:
+				self.endRound()
+
 
 	# method to evaluate who wins a hand
 	# method returns the card which wins
