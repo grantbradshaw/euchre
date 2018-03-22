@@ -36,6 +36,42 @@ class Game:
 		self.faceup = self.deck[20]
 		self.dealer = self.table.pop(0)
 		self.table.append(self.dealer)
+		self.setTrump()
+
+	# method to decide trump for a round
+	# method returns nothing, but has side effect of setting trump
+	def setTrump(self):
+		self.setTrumpFaceUp()
+
+		if not self.trump: # if no trump was set when card was face up
+			self.setTrumpFaceDown()
+
+	# method to decide trump when card is faceup
+	# method returns nothing, but either 
+	# 	sets trump as a suit, allows dealer to add faceup card to hand, and sets calledTrump attribute on player's team to True
+	# 	does nothing
+	def setTrumpFaceUp(self):
+		for player in self.table:
+			dealerIsPartner = self.team1.sameTeam(player, self.dealer) or self.team2.sameTeam(player, self.dealer)
+			decision = player.decideTrumpFaceUp(self.faceup, dealerIsPartner)
+
+			if decision:
+				self.dealer.addCardToHand(self.faceup, self.trump, self.table.index(player))
+				self.trump = self.faceup.suit
+				if self.team1.onTeam(player):
+					self.team1.calledTrump = True
+				else:
+					self.team2.calledTrump = True
+				break
+			else:
+				continue
+
+	# method to decide trump when no card is faceup
+	# method returns nothing, but either
+	# 	sets trump as a suit
+	# 	does nothing
+	def setTrumpFaceDown(self):
+		pass
 
 	# method to evaluate who wins a hand
 	# method returns the card which wins

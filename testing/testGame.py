@@ -1,5 +1,7 @@
-import os, sys
 import unittest
+from unittest.mock import patch, MagicMock
+import copy
+import os, sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 from objects import game, team, player, card
 from environment import HEARTS, DIAMONDS, SPADES, CLUBS, A, K, Q, J, TEN, NINE, SUITS, SYMBOLS
@@ -246,15 +248,10 @@ class RuleEval(unittest.TestCase):
 			with self.subTest(player=player):
 				self.assertEqual(len(player.hand), 5)
 
-	def test_start_round_2(self):
-		'''Faceup card should be different from any card in players hands'''
-		self.current_game.startRound()
-		result = False # result indicates whether card has appeared in a hand
-		for player in [self.player1, self.player2, self.player3, self.player4]:
-			for card in player.hand:
-				if self.cardsEqual(card, self.current_game.faceup):
-					result = True
-		self.assertEqual(result, False)
+	# def test_start_round_2(self):
+		'''Faceup card should be different from any card in players opening hands'''
+
+		# this needs to be written
 
 	def test_start_round_3(self):
 		'''There should be 4 players at the table'''
@@ -281,6 +278,12 @@ class RuleEval(unittest.TestCase):
 		dealer1 = self.current_game.dealer
 		self.current_game.startRound()
 		self.assertNotEqual(dealer1, self.current_game.dealer)
+
+# there should be a set of tests which test that when trump is set, cards are added to hands appropriately
+# and side effects occur appropriately
+# class SetTrump(unittest.TestCase):
+
+
 
 if __name__ == '__main__':
 	unittest.main()
